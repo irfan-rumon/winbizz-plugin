@@ -1,216 +1,376 @@
 <?php
-class Slider extends \Elementor\Widget_Base {
-  
+class Slider extends \Elementor\Widget_Base
+{
 
-	public function get_name() {
+
+	public function get_name()
+	{
 		return 'Slider';
 	}
 
-	public function get_title() {
-		return esc_html__( 'Slider', 'elementor-addon' );
+	public function get_title()
+	{
+		return esc_html__('Slider', 'elementor-addon');
 	}
 
-	public function get_icon() {
+	public function get_icon()
+	{
 		return 'eicon-code';
 	}
 
-	public function get_categories() {
-		return [ 'basic' ];
+	public function get_categories()
+	{
+		return ['basic'];
 	}
 
-	public function get_keywords() {
-		return [ 'slider' ];
+	public function get_keywords()
+	{
+		return ['slider'];
 	}
 
-	protected function register_controls() {
+	protected function register_controls()
+	{
 
 		// Content Tab Start
 
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => esc_html__( 'Title', 'elementor-addon' ),
+				'label' => esc_html__('Title', 'elementor-addon'),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-	
+
 		$this->end_controls_section();
 	}
 
 
-	
-
-	protected function render() {
-    ?>	
-		<style>
-			#single-slide{
-				display:flex;
-				flex-direction:row;
-				gap:20px;
-				min-width: 25%;
-			}
-
-			#slide-image > img{
-				border-radius: 18px;
-				width: 10rem;
-				height:10rem;
-			}
-
-			#slider-container{
-				display:flex;
-				flex-direction:row;
-				gap:20px;
-                flex-wrap:nowrap; 
-           		overflow-x: auto;
-			}
 
 
+	protected function render()
+	{
+?>
+<style>
+	#main-container {
+		padding-left: 1em;
+	}
+
+	#slider-container {
+		/* width: 100vw; */
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		-ms-overflow-style: none;
+		/* Internet Explorer 10+ */
+		scrollbar-width: none;
+		/* Firefox */
+	}
+
+	#slider-container::-webkit-scrollbar {
+		display: none;
+		/* Safari and Chrome */
+	}
+
+	#single-slide {
+		margin-left: 1em;
+		display: flex;
+		flex-direction: row;
+		min-width: 25em;
+	}
+
+	/* tablet */
+	@media (max-width: 820px) {
+		#single-slide {
+			transform: scale(0.97);
+
+		}
+	}
+
+	/* mobile */
+	@media (max-width: 480px) {
+		#single-slide {
+			transform: scale(0.8);
+			flex-wrap: wrap;
+		}
+	}
+
+	#slide-image>img {
+		border-radius: 18px;
+		width: 10em;
+		height: 10em;
+	}
 
 
-			button{
-                font-size: 10px;
-				border-radius: 10px;
-			}
-
-			#content-tile, #subcontent-tile, #price{
-               margin-top: -10px;
-			}
+	#content {
+		display: flex;
+		flex-direction: column;
+		margin-left: 1em;
+	}
 
 
-            #navigation-controller{
-				display: flex;
-				flex-direction: row;
-				margin-top:10px;
-			}
+	#content>h6 {
+		margin-top: -15px;
+	}
 
-			#navigation-controller > svg{
-                  height:10px;
-				  width:10px; 
-			}
-
-			#progress-bar{
-				width: 200px;
-				height: 3px;
-				background-color:tomato;
-				margin-top: 5px;
-			}
-			
+	#content-title {
+		font-size: 25px;
+		font-weight: 500;
+		color: #000;
+	}
 
 
-		</style>
-		<div id="main-container">
-			<div id="slider-container">
-				<div id="single-slide">
-					<div id="slide-image">
-                          <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"> 
-					</div>
+	#content-subtitle {
+		font-size: 16px;
+		font-weight: 500;
+		color: grey;
+	}
 
-					<div id="content">
-                         <h1 id="content-tile">Receptan Basic</h1>
-						 <h6 id="subcontent-tile">Editor: Komunic</h6>
-						 <h6 id="price">CHF: 6.90</h6>
-						 <button type="submit">more infos</button>
-					</div>
-             
-				</div>
+	#content-price {
+		font-size: 18px;
+		color: #0000df;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
 
-				<div id="single-slide">
-					<div id="slide-image">
-                          <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"> 
-					</div>
+	/* tablet */
+	@media (max-width: 820px) {
+		#content-title {
+			font-size: 20px;
+		}
 
-					<div id="content">
-                         <h1>Receptan Basic2</h1>
-						 <h6>Editor: Komunic2</h6>
-						 <h6>CHF: 6.90</h6>
-						 <button type="submit">more infos</button>
-					</div>
-             
-				</div>
+		#content-subtitle {
+			font-size: 12px;
+		}
 
-				<div id="single-slide">
-					<div id="slide-image">
-                          <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"> 
-					</div>
+		#content-price {
+			font-size: 14px;
+		}
+	}
 
-					<div id="content">
-                         <h1>Receptan Basic3</h1>
-						 <h6>Editor: Komunic3</h6>
-						 <h6>CHF: 6.92</h6>
-						 <button type="submit">more infos</button>
-					</div>
+	/* mobile */
+	@media (max-width: 480px) {
+		#content-title {
+			font-size: 18px;
+		}
 
-					
-				</div>
+		#content-subtitle {
+			font-size: 10px;
+		}
 
-				<div id="single-slide">
-					<div id="slide-image">
-                          <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"> 
-					</div>
+		#content-price {
+			font-size: 12px;
+		}
+	}
 
-					<div id="content">
-                         <h1>Receptan Basic4</h1>
-						 <h6>Editor: Komunic4</h6>
-						 <h6>CHF: 6.92</h6>
-						 <button type="submit">more infos</button>
-					</div>
+	#info-btn {
+		width: 7em;
+		margin-top: auto;
+		font-size: 14px;
+		padding: 8px 10px 6px;
+		border-radius: 7px;
+		background-color: #e8e8e8;
+		color: grey;
+	}
 
-					
-				</div>
+	#navigation-controller {
+		display: flex;
+		flex-direction: row;
+		margin-top: 50px;
+	}
 
-				<div id="single-slide">
-					<div id="slide-image">
-                          <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FzaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"> 
-					</div>
+	#navigation-controller>svg {
+		height: 20px;
+		width: 20px;
+	}
 
-					<div id="content">
-                         <h1>Receptan Basic4</h1>
-						 <h6>Editor: Komunic4</h6>
-						 <h6>CHF: 6.92</h6>
-						 <button type="submit">more infos</button>
-					</div>
+	#progress-bar {
+		width: 200px;
+		height: 3px;
+		margin-top: 5px;
+	}
 
-					
-				</div>
-		
-		
+	#progress-fill {
+		z-index: 3;
+		width: 25%;
+		height: 3px;
+		margin-top: 3px;
+		background-color: #0000df;
+	}
+</style>
+
+<?php
+		$args = array(
+			'post_type' => 'winbiz_slider',
+			'post_status' => 'publish',
+			'order' => 'DESC',
+		);
+
+
+		$result = new WP_Query($args);
+
+?>
+
+<div id="main-container">
+	<div id="slider-container">
+
+		<?php
+		if ($result->have_posts()) {
+
+			while ($result->have_posts()) {
+				$result->the_post();
+        ?>
+		<div id="single-slide">
+			<div id="slide-image">
+				<?php the_post_thumbnail(); ?>
 			</div>
 
-			<div id="navigation-controller">
-			    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
-			    
-				<div id="progress-bar">
 
-				</div>
-				
-				
-				
-				
-				<svg  id="right-arrow"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
+
+			<div id="content">
+				<h1 id="content-title">
+					<?php the_title(); ?>
+				</h1>
+				<h6 id="content-subtitle">
+					<?php echo get_post_custom_values('slider-subtitle')[0] ?>
+				</h6>
+				<h6 id="content-price">
+					<?php echo get_post_custom_values('slider-price')[0] ?>
+				</h6>
+				<button type="submit" id='info-btn'>plus d'infos</button>
 			</div>
+		</div>
+
+		<?php
+			}
+		}
+        ?>
+	</div>
 
 
+	<div id="navigation-controller">
+		<svg id="left-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+			<path stroke="white" stroke-width="40px"
+				d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+				fill='#0000df' />
+		</svg>
 
+		<div id="progress-bar">
+			<div id='progress-fill'>
+			</div>
 		</div>
 
 
 
+		<svg id="right-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+
+			<path stroke="white" stroke-width="40px"
+				d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+				fill='#0000df' />
+		</svg>
+	</div>
 
 
-    <script>
-	    const button = document.getElementById('right-arrow');
 
-		button.onclick = () => {
-		document.getElementById('slider-container').scrollLeft += 20;
-		};
-	</script>
+</div>
 
-   <?php
+
+
+
+
+<script>
+	let container = document.getElementById('slider-container');
+	let single_slide = document.getElementById('single-slide');
+
+	let container_width = window.getComputedStyle(single_slide);
+	container_width = container_width.getPropertyValue('width');
+	container_width = container_width.substring(0, container_width.length - 2);
+	container_width = parseInt(container_width, 10);
+
+	let single_slide_width = window.getComputedStyle(single_slide);
+	single_slide_width = single_slide_width.getPropertyValue('width');
+	single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
+	single_slide_width = parseInt(single_slide_width, 10);
+
+	let progress_bar = document.getElementById('progress-bar');
+	let progress_fill = document.getElementById('progress-fill');
+
+	let total_progress_width = window.getComputedStyle(progress_bar);
+	total_progress_width = total_progress_width.getPropertyValue('width');
+	total_progress_width = total_progress_width.substring(0, total_progress_width.length - 2);
+	total_progress_width = parseInt(total_progress_width, 10);
+
+	let progress_width = window.getComputedStyle(progress_fill);
+	progress_width = progress_width.getPropertyValue('width');
+	progress_width = progress_width.substring(0, progress_width.length - 2);
+	progress_width = (progress_width / total_progress_width) * 100;
+
+	const SLIDE_SPEED = 20;
+	const TOTAL_SLIDE = single_slide_width;
+	const SLIDE_TIME = 10;
+
+	items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
+	progress_increase = (((items_in_viewport + 1) / 6) - (items_in_viewport / 6)) * 100
+
+	progress_width = (Math.floor(progress_increase) * items_in_viewport)
+	progress_fill.style.width = (progress_increase * items_in_viewport) + '%';
+	console.log(progress_width)
+	const rbutton = document.getElementById('right-arrow');
+
+	rbutton.onclick = () => {
+
+		scrollAmount = 0;
+		let slideTimer = setInterval(function () {
+			container.scrollLeft += SLIDE_SPEED;
+			scrollAmount += SLIDE_SPEED;
+			if (scrollAmount >= TOTAL_SLIDE) {
+				window.clearInterval(slideTimer);
+			}
+		}, SLIDE_TIME);
+
+
+		if (progress_width < 100) {
+			progress_width += progress_increase;
+
+			if (progress_width > 100) {
+				progress_width = 100;
+			}
+		}
+
+		progress_fill.style.width = progress_width + '%';
+
+	};
+
+	const lbutton = document.getElementById('left-arrow');
+
+	lbutton.onclick = () => {
+		scrollAmount = 0;
+		let slideTimer = setInterval(function () {
+			container.scrollLeft -= SLIDE_SPEED;
+			scrollAmount += SLIDE_SPEED;
+			if (scrollAmount >= TOTAL_SLIDE) {
+				window.clearInterval(slideTimer);
+			}
+		}, SLIDE_TIME);
+
+
+		if (progress_width > (Math.floor(progress_increase) * items_in_viewport)) {
+			progress_width -= progress_increase;
+
+			if (progress_width < (Math.floor(progress_increase) * items_in_viewport)) {
+				progress_width = (Math.floor(progress_increase) * items_in_viewport);
+			}
+		}
+
+		progress_fill.style.width = progress_width + '%';
+	};
+</script>
+
+<?php
 	}
-	
-	
 
-		
+
+
+
 }
-
