@@ -58,6 +58,7 @@ class Slider extends \Elementor\Widget_Base
 
 	#slider-container {
 		/* width: 100vw; */
+		margin-left: -2em;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -74,32 +75,28 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#single-slide {
-		margin-left: 1em;
+		margin-left: 0em;
 		display: flex;
 		flex-direction: row;
-		min-width: 25em;
-	}
-
-	/* tablet */
-	@media (max-width: 820px) {
-		#single-slide {
-			transform: scale(0.97);
-
-		}
-	}
-
-	/* mobile */
-	@media (max-width: 480px) {
-		#single-slide {
-			transform: scale(0.8);
-			flex-wrap: wrap;
-		}
+		min-width: 26em;
 	}
 
 	#slide-image>img {
 		border-radius: 18px;
-		width: 10em;
-		height: 10em;
+		width: 8em;
+		height: 8.5em;
+		transform: scale(0.95);
+	}
+
+	#slide-image {
+		border-radius: 18px;
+		transition: all 0.2s ease-in-out;
+	}
+
+	#slide-image:hover {
+		transition: all 0.2s ease-in-out;
+		transform: scale(1.05);
+		border-radius: 18px;
 	}
 
 
@@ -110,68 +107,43 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 
-	#content>h6 {
-		margin-top: -15px;
-	}
-
 	#content-title {
-		font-size: 25px;
-		font-weight: 500;
 		color: #000;
+		padding-top: 2px;
+		font-weight: 500;
+		margin-bottom: 0px;
+		font-size: 20px;
 	}
-
 
 	#content-subtitle {
+		margin-top: -4px;
 		font-size: 16px;
 		font-weight: 500;
 		color: grey;
+		margin-bottom: 0px;
+
 	}
 
 	#content-price {
-		font-size: 18px;
-		color: #0000df;
 		font-weight: 500;
-		text-transform: uppercase;
-	}
+		font-size: 16px;
+		color: #0000df;
 
-	/* tablet */
-	@media (max-width: 820px) {
-		#content-title {
-			font-size: 20px;
-		}
-
-		#content-subtitle {
-			font-size: 12px;
-		}
-
-		#content-price {
-			font-size: 14px;
-		}
-	}
-
-	/* mobile */
-	@media (max-width: 480px) {
-		#content-title {
-			font-size: 18px;
-		}
-
-		#content-subtitle {
-			font-size: 10px;
-		}
-
-		#content-price {
-			font-size: 12px;
-		}
+		margin-bottom: 3px;
 	}
 
 	#info-btn {
-		width: 7em;
+		text-transform: none;
+		font-size: 13px;
+		width: 9em;
 		margin-top: auto;
-		font-size: 14px;
-		padding: 8px 10px 6px;
+		margin-bottom: 5px;
+
+		padding: 8px 0px 5px;
 		border-radius: 7px;
 		background-color: #e8e8e8;
 		color: grey;
+		font-weight: 550;
 	}
 
 	#navigation-controller {
@@ -198,11 +170,72 @@ class Slider extends \Elementor\Widget_Base
 		margin-top: 3px;
 		background-color: #0000df;
 	}
+
+
+	/* tablet */
+	@media (max-width: 820px) {
+		#single-slide {
+			transform: scale(0.97);
+			min-width: 26em;
+		}
+	
+	}
+
+	/* mobile */
+	@media (max-width: 480px) {
+
+        #slider-container{
+			margin-left: -5em;
+		}
+
+		#single-slide {
+			transform: scale(0.8);
+			flex-wrap: wrap;
+			min-width: 26em;
+		}
+	}
+
+
+	/* tablet */
+	@media (max-width: 820px) {
+		#slider-container{
+			margin-left: -2.7em;
+		}
+		#content-title {
+			font-size: 20px;
+		}
+
+		#content-subtitle {
+			font-size: 12px;
+		}
+
+		#content-price {
+			font-size: 14px;
+		}
+	}
+
+	/* mobile */
+	@media (max-width: 480px) {
+		#slider-container{
+			margin-left: -5em;
+		}
+		#content-title {
+			font-size: 18px;
+		}
+
+		#content-subtitle {
+			font-size: 10px;
+		}
+
+		#content-price {
+			font-size: 12px;
+		}
+	}
 </style>
 
 <?php
 		$args = array(
-			'post_type' => 'winbiz_slider',
+			'post_type' => 'slider',
 			'post_status' => 'publish',
 			'order' => 'DESC',
 		);
@@ -229,16 +262,16 @@ class Slider extends \Elementor\Widget_Base
 
 
 			<div id="content">
-				<h1 id="content-title">
+				<p id="content-title">
 					<?php the_title(); ?>
-				</h1>
-				<h6 id="content-subtitle">
-					<?php echo get_post_custom_values('slider-subtitle')[0] ?>
-				</h6>
-				<h6 id="content-price">
-					<?php echo get_post_custom_values('slider-price')[0] ?>
-				</h6>
-				<button type="submit" id='info-btn'>plus d'infos</button>
+				</p>
+				<p id="content-subtitle">
+					<?php echo get_post_custom_values('subtitle')[0] ?>
+				</p>
+				<p id="content-price">
+					<?php echo get_post_custom_values('price')[0] ?>
+				</p>
+				<button type="submit" id="info-btn">Plus d'infos</button>
 			</div>
 		</div>
 
