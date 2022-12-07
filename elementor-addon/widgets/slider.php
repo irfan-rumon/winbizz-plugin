@@ -178,13 +178,13 @@ class Slider extends \Elementor\Widget_Base
 			transform: scale(0.97);
 			min-width: 26em;
 		}
-	
+
 	}
 
 	/* mobile */
 	@media (max-width: 480px) {
 
-        #slider-container{
+		#slider-container {
 			margin-left: -5em;
 		}
 
@@ -198,9 +198,10 @@ class Slider extends \Elementor\Widget_Base
 
 	/* tablet */
 	@media (max-width: 820px) {
-		#slider-container{
+		#slider-container {
 			margin-left: -2.7em;
 		}
+
 		#content-title {
 			font-size: 20px;
 		}
@@ -216,9 +217,10 @@ class Slider extends \Elementor\Widget_Base
 
 	/* mobile */
 	@media (max-width: 480px) {
-		#slider-container{
+		#slider-container {
 			margin-left: -5em;
 		}
+
 		#content-title {
 			font-size: 18px;
 		}
@@ -313,13 +315,13 @@ class Slider extends \Elementor\Widget_Base
 
 
 <script>
+
+
 	let container = document.getElementById('slider-container');
 	let single_slide = document.getElementById('single-slide');
+	const NumberOfElements = 5;
 
-	let container_width = window.getComputedStyle(single_slide);
-	container_width = container_width.getPropertyValue('width');
-	container_width = container_width.substring(0, container_width.length - 2);
-	container_width = parseInt(container_width, 10);
+	
 
 	let single_slide_width = window.getComputedStyle(single_slide);
 	single_slide_width = single_slide_width.getPropertyValue('width');
@@ -328,75 +330,51 @@ class Slider extends \Elementor\Widget_Base
 
 	let progress_bar = document.getElementById('progress-bar');
 	let progress_fill = document.getElementById('progress-fill');
+	progress_fill.style.width = 20 + '%';
+	container.onscroll = function (e) {
+		
+	
+		progress_fill.style.width =  Math.min( Math.max(0.07*container.scrollLeft, 20), 100) + '%';
+	    
+	
+	}
 
-	let total_progress_width = window.getComputedStyle(progress_bar);
-	total_progress_width = total_progress_width.getPropertyValue('width');
-	total_progress_width = total_progress_width.substring(0, total_progress_width.length - 2);
-	total_progress_width = parseInt(total_progress_width, 10);
-
-	let progress_width = window.getComputedStyle(progress_fill);
-	progress_width = progress_width.getPropertyValue('width');
-	progress_width = progress_width.substring(0, progress_width.length - 2);
-	progress_width = (progress_width / total_progress_width) * 100;
-
-	const SLIDE_SPEED = 20;
-	const TOTAL_SLIDE = single_slide_width;
-	const SLIDE_TIME = 10;
-
-	items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
-	progress_increase = (((items_in_viewport + 1) / 6) - (items_in_viewport / 6)) * 100
-
-	progress_width = (Math.floor(progress_increase) * items_in_viewport)
-	progress_fill.style.width = (progress_increase * items_in_viewport) + '%';
-	console.log(progress_width)
 	const rbutton = document.getElementById('right-arrow');
+
+	let scrollMin = 0;
+	let scrollMax = single_slide_width * NumberOfElements;
+	let cnt = 0;
+
+	let scrollAmount = 0;
+
+	// progress_fill.style.width = 50 + '%';
 
 	rbutton.onclick = () => {
 
-		scrollAmount = 0;
-		let slideTimer = setInterval(function () {
-			container.scrollLeft += SLIDE_SPEED;
-			scrollAmount += SLIDE_SPEED;
-			if (scrollAmount >= TOTAL_SLIDE) {
-				window.clearInterval(slideTimer);
-			}
-		}, SLIDE_TIME);
+		scrollAmount = Math.min(scrollAmount += single_slide_width, scrollMax);
+		container.scrollTo({
+			top: 0,
+			left: scrollAmount,
+			behavior: 'smooth'
+		});
 
-
-		if (progress_width < 100) {
-			progress_width += progress_increase;
-
-			if (progress_width > 100) {
-				progress_width = 100;
-			}
-		}
-
-		progress_fill.style.width = progress_width + '%';
 
 	};
+
 
 	const lbutton = document.getElementById('left-arrow');
 
 	lbutton.onclick = () => {
-		scrollAmount = 0;
-		let slideTimer = setInterval(function () {
-			container.scrollLeft -= SLIDE_SPEED;
-			scrollAmount += SLIDE_SPEED;
-			if (scrollAmount >= TOTAL_SLIDE) {
-				window.clearInterval(slideTimer);
-			}
-		}, SLIDE_TIME);
+
+		scrollAmount = Math.max(scrollAmount -= single_slide_width, 0);
+		container.scrollTo({
+			top: 0,
+			left: scrollAmount,
+			behavior: 'smooth'
+		});
 
 
-		if (progress_width > (Math.floor(progress_increase) * items_in_viewport)) {
-			progress_width -= progress_increase;
 
-			if (progress_width < (Math.floor(progress_increase) * items_in_viewport)) {
-				progress_width = (Math.floor(progress_increase) * items_in_viewport);
-			}
-		}
-
-		progress_fill.style.width = progress_width + '%';
 	};
 </script>
 
