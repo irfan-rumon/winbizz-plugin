@@ -1,16 +1,14 @@
 <?php
 class Slider extends \Elementor\Widget_Base
 {
-
-
 	public function get_name()
 	{
-		return 'Slider';
+		return 'Winbiz Slider';
 	}
 
 	public function get_title()
 	{
-		return esc_html__('Slider', 'elementor-addon');
+		return esc_html__('Winbiz Slider', 'elementor-addon');
 	}
 
 	public function get_icon()
@@ -30,7 +28,6 @@ class Slider extends \Elementor\Widget_Base
 
 	protected function register_controls()
 	{
-
 		// Content Tab Start
 
 		$this->start_controls_section(
@@ -41,19 +38,42 @@ class Slider extends \Elementor\Widget_Base
 			]
 		);
 
+		$this->add_control(
+			'post_list',
+			[
+				'label' => esc_html__(' POST TYPE: ', 'elementor-addon'),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'left',
+				'options' => [
+					//'video' => __('Video', 'elementor-addon'),
+					//'post' => __('Post', 'elementor-addon'),
+					'slider' => __('Slider', 'elementor-addon'),
+					'video' => __('Video', 'elementor-addon'),
+					//'bizzslider' => __('BizzSlider', 'elementor-addon'),
+					//'//imageURL' => __('Image URL', 'elementor-addon'),
+					//'catagory' => __('Catagory', 'elementor-addon'),
+				]
+			],
+
+		);
 
 		$this->end_controls_section();
+
+		// Content Tab End
 	}
-
-
 
 
 	protected function render()
 	{
 ?>
 <style>
+	* {
+		cursor: pointer;
+	}
+
 	#main-container {
 		padding-left: 1em;
+		cursor: pointer;
 	}
 
 	#slider-container {
@@ -75,6 +95,7 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#single-slide {
+		cursor: pointer;
 		margin-left: 0em;
 		display: flex;
 		flex-direction: row;
@@ -82,6 +103,8 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#slide-image>img {
+		box-shadow: 5px 5px 5px rgba(0, 0, 0, .15);
+		cursor: pointer;
 		border-radius: 18px;
 		width: 8em;
 		height: 8.5em;
@@ -89,11 +112,13 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#slide-image {
+		cursor: pointer;
 		border-radius: 18px;
 		transition: all 0.2s ease-in-out;
 	}
 
 	#slide-image:hover {
+		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 		transform: scale(1.05);
 		border-radius: 18px;
@@ -101,6 +126,7 @@ class Slider extends \Elementor\Widget_Base
 
 
 	#content {
+		cursor: pointer;
 		display: flex;
 		flex-direction: column;
 		margin-left: 1em;
@@ -108,6 +134,7 @@ class Slider extends \Elementor\Widget_Base
 
 
 	#content-title {
+		cursor: pointer;
 		color: #000;
 		padding-top: 2px;
 		font-weight: 500;
@@ -116,6 +143,7 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#content-subtitle {
+		cursor: pointer;
 		margin-top: -4px;
 		font-size: 16px;
 		font-weight: 500;
@@ -125,20 +153,20 @@ class Slider extends \Elementor\Widget_Base
 	}
 
 	#content-price {
+		cursor: pointer;
 		font-weight: 500;
 		font-size: 16px;
 		color: #0000df;
-
 		margin-bottom: 3px;
 	}
 
 	#info-btn {
+		cursor: pointer;
 		text-transform: none;
 		font-size: 13px;
 		width: 9em;
 		margin-top: auto;
 		margin-bottom: 5px;
-
 		padding: 8px 0px 5px;
 		border-radius: 7px;
 		background-color: #e8e8e8;
@@ -161,6 +189,7 @@ class Slider extends \Elementor\Widget_Base
 		width: 200px;
 		height: 3px;
 		margin-top: 5px;
+		margin-left: 0px;
 	}
 
 	#progress-fill {
@@ -171,6 +200,19 @@ class Slider extends \Elementor\Widget_Base
 		background-color: #0000df;
 	}
 
+	#navigation-controller {
+		margin-left: -30px !important;
+		;
+	}
+
+
+	/*  Large Screen  */
+	@media (min-width: 1400px) {
+		#single-slide {
+			padding-left: -250px !important;
+
+		}
+	}
 
 	/* tablet */
 	@media (max-width: 820px) {
@@ -179,25 +221,6 @@ class Slider extends \Elementor\Widget_Base
 			min-width: 26em;
 		}
 
-	}
-
-	/* mobile */
-	@media (max-width: 480px) {
-
-		#slider-container {
-			margin-left: -5em;
-		}
-
-		#single-slide {
-			transform: scale(0.8);
-			flex-wrap: wrap;
-			min-width: 26em;
-		}
-	}
-
-
-	/* tablet */
-	@media (max-width: 820px) {
 		#slider-container {
 			margin-left: -2.7em;
 		}
@@ -213,10 +236,23 @@ class Slider extends \Elementor\Widget_Base
 		#content-price {
 			font-size: 14px;
 		}
+
+		#progress-bar {
+
+			margin-left: 0px;
+		}
 	}
 
 	/* mobile */
 	@media (max-width: 480px) {
+
+		#single-slide {
+			transform: scale(0.8);
+			flex-wrap: wrap;
+			min-width: 26em;
+		}
+
+
 		#slider-container {
 			margin-left: -5em;
 		}
@@ -261,8 +297,6 @@ class Slider extends \Elementor\Widget_Base
 				<?php the_post_thumbnail(); ?>
 			</div>
 
-
-
 			<div id="content">
 				<p id="content-title">
 					<?php the_title(); ?>
@@ -296,8 +330,6 @@ class Slider extends \Elementor\Widget_Base
 			</div>
 		</div>
 
-
-
 		<svg id="right-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
 
 			<path stroke="white" stroke-width="40px"
@@ -306,37 +338,26 @@ class Slider extends \Elementor\Widget_Base
 		</svg>
 	</div>
 
-
-
 </div>
 
-
-
-
-
 <script>
-
 
 	let container = document.getElementById('slider-container');
 	let single_slide = document.getElementById('single-slide');
 	const NumberOfElements = 5;
-
-	
-
 	let single_slide_width = window.getComputedStyle(single_slide);
 	single_slide_width = single_slide_width.getPropertyValue('width');
 	single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
 	single_slide_width = parseInt(single_slide_width, 10);
-
-	let progress_bar = document.getElementById('progress-bar');
+    let progress_bar = document.getElementById('progress-bar');
 	let progress_fill = document.getElementById('progress-fill');
 	progress_fill.style.width = 20 + '%';
 	container.onscroll = function (e) {
-		
-	
-		progress_fill.style.width =  Math.min( Math.max(0.07*container.scrollLeft, 20), 100) + '%';
-	    
-	
+
+
+	progress_fill.style.width = Math.min(Math.max(0.07 * container.scrollLeft, 20), 100) + '%';
+
+
 	}
 
 	const rbutton = document.getElementById('right-arrow');
@@ -373,15 +394,9 @@ class Slider extends \Elementor\Widget_Base
 			behavior: 'smooth'
 		});
 
-
-
 	};
 </script>
 
 <?php
 	}
-
-
-
-
 }
