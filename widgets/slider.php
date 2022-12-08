@@ -152,9 +152,11 @@ class Slider extends \Elementor\Widget_Base
 
 	let container = document.getElementById('slider-container');
 	let single_slide = document.getElementById('single-slide');
-
-	const NumberOfElements = 5;
 	
+	const NumberOfElements = <?php echo json_encode(wp_count_posts($this->get_settings_for_display()['post_list'])->publish) ?>;
+	items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
+
+
 	let single_slide_width = window.getComputedStyle(single_slide);
 	single_slide_width = single_slide_width.getPropertyValue('width');
 	single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
