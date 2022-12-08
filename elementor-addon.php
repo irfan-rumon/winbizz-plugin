@@ -20,6 +20,16 @@ function register_slider_widget($widgets_manager){
 
 }
 
+function frontend_styles() {
+
+	wp_register_style( 'slider_style', plugins_url( 'assets/css/slider_style.css', __FILE__ ) );
+
+	wp_enqueue_style( 'slider_style' );
+
+}
+
 
 add_action( 'elementor/widgets/register', 'register_hello_world_widget' );
 add_action( 'elementor/widgets/register', 'register_slider_widget' );
+
+add_action( 'elementor/frontend/after_enqueue_styles', 'frontend_styles' );
