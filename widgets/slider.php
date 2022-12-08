@@ -152,30 +152,27 @@ class Slider extends \Elementor\Widget_Base
 
 	let container = document.getElementById('slider-container');
 	let single_slide = document.getElementById('single-slide');
+
 	const NumberOfElements = 5;
+	
 	let single_slide_width = window.getComputedStyle(single_slide);
 	single_slide_width = single_slide_width.getPropertyValue('width');
 	single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
 	single_slide_width = parseInt(single_slide_width, 10);
-    let progress_bar = document.getElementById('progress-bar');
+    
+	let progress_bar = document.getElementById('progress-bar');
 	let progress_fill = document.getElementById('progress-fill');
-	progress_fill.style.width = 20 + '%';
+	
+	
 	container.onscroll = function (e) {
-
-
-	progress_fill.style.width = Math.min(Math.max(0.07 * container.scrollLeft, 20), 100) + '%';
-
-
+		progress_fill.style.width = Math.min(Math.max(0.07 * container.scrollLeft, 20), 100) + '%';
 	}
 
-	const rbutton = document.getElementById('right-arrow');
-
-	let scrollMin = 0;
 	let scrollMax = single_slide_width * NumberOfElements;
-	let cnt = 0;
-
 	let scrollAmount = 0;
 
+
+	const rbutton = document.getElementById('right-arrow');
 	rbutton.onclick = () => {
 
 		scrollAmount = Math.min(scrollAmount += single_slide_width, scrollMax);
@@ -190,7 +187,6 @@ class Slider extends \Elementor\Widget_Base
 
 
 	const lbutton = document.getElementById('left-arrow');
-
 	lbutton.onclick = () => {
 
 		scrollAmount = Math.max(scrollAmount -= single_slide_width, 0);
