@@ -1,10 +1,8 @@
 <?php
 /**
  * Plugin Name: Custom Slider
- * Description: Simple hello world widgets for Elementor.
+ * Description: Custom slider widget for elementor
  * Version:     1.0.0
- * Author:      Elementor Developer
- * Author URI:  https://developers.elementor.com/
  * Text Domain: custom-slider
  */
 

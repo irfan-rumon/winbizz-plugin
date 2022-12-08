@@ -25,10 +25,27 @@ class Slider extends \Elementor\Widget_Base
 	{
 		return ['slider'];
 	}
+ 
 
 	protected function register_controls()
 	{
 		// Content Tab Start
+
+		$args = array(
+			'public'   => true,
+			'_builtin' => false,
+		);
+	 
+		$output = 'names'; // names or objects, note names is the default
+		$operator = 'and'; // 'and' or 'or'
+	 
+		$post_types = get_post_types( $args, $output, $operator ); 
+
+		$post_type_options = [];
+		foreach($post_types as $post_type){
+			$post_type_options[$post_type] = __($post_type, 'elementor-addon');
+		}
+		 
 
 		$this->start_controls_section(
 			'section_title',
@@ -44,15 +61,7 @@ class Slider extends \Elementor\Widget_Base
 				'label' => esc_html__(' POST TYPE: ', 'elementor-addon'),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'left',
-				'options' => [
-					//'video' => __('Video', 'elementor-addon'),
-					//'post' => __('Post', 'elementor-addon'),
-					'slider' => __('Slider', 'elementor-addon'),
-					'video' => __('Video', 'elementor-addon'),
-					//'bizzslider' => __('BizzSlider', 'elementor-addon'),
-					//'//imageURL' => __('Image URL', 'elementor-addon'),
-					//'catagory' => __('Catagory', 'elementor-addon'),
-				]
+				'options' => $post_type_options
 			],
 
 		);
@@ -272,14 +281,18 @@ class Slider extends \Elementor\Widget_Base
 </style>
 
 <?php
+		$settings = $this->get_settings_for_display();
 		$args = array(
-			'post_type' => 'slider',
+			'post_type' => $settings['post_list'],
 			'post_status' => 'publish',
 			'order' => 'DESC',
 		);
 
 
 		$result = new WP_Query($args);
+
+		var_dump($settings['post_list']);
+		
 
 ?>
 
@@ -302,10 +315,10 @@ class Slider extends \Elementor\Widget_Base
 					<?php the_title(); ?>
 				</p>
 				<p id="content-subtitle">
-					<?php echo get_post_custom_values('subtitle')[0] ?>
+					<?php echo get_post_custom_values('slider-subtitle')[0] ?>
 				</p>
 				<p id="content-price">
-					<?php echo get_post_custom_values('price')[0] ?>
+					<?php echo get_post_custom_values('slider-price')[0] ?>
 				</p>
 				<button type="submit" id="info-btn">Plus d'infos</button>
 			</div>
@@ -367,8 +380,6 @@ class Slider extends \Elementor\Widget_Base
 	let cnt = 0;
 
 	let scrollAmount = 0;
-
-	// progress_fill.style.width = 50 + '%';
 
 	rbutton.onclick = () => {
 
