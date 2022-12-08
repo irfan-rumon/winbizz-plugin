@@ -168,7 +168,6 @@ class Slider extends \Elementor\Widget_Base
 		single_slide_width = single_slide_width.getPropertyValue('width');
 		single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
 		single_slide_width = parseInt(single_slide_width, 10);
-		console.log(single_slide_width)
 	});
 
 	let items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
