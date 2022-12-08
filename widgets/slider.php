@@ -153,25 +153,37 @@ class Slider extends \Elementor\Widget_Base
 	let container = document.getElementById('slider-container');
 	let single_slide = document.getElementById('single-slide');
 	
-	const NumberOfElements = <?php echo json_encode(wp_count_posts($this->get_settings_for_display()['post_list'])->publish) ?>;
-	items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
-
+	// get total number of posts
+	const TotalItems = <?php echo json_encode(wp_count_posts($this->get_settings_for_display()['post_list'])->publish) ?>;
 
 	let single_slide_width = window.getComputedStyle(single_slide);
 	single_slide_width = single_slide_width.getPropertyValue('width');
 	single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
 	single_slide_width = parseInt(single_slide_width, 10);
+
+	
+	// single slide width info is updated for screen resize
+	addEventListener("resize", (event) => {
+		single_slide_width = window.getComputedStyle(single_slide);
+		single_slide_width = single_slide_width.getPropertyValue('width');
+		single_slide_width = single_slide_width.substring(0, single_slide_width.length - 2);
+		single_slide_width = parseInt(single_slide_width, 10);
+		console.log(single_slide_width)
+	});
+
+	let items_in_viewport = Math.floor(window.innerWidth / single_slide_width);
     
 	let progress_bar = document.getElementById('progress-bar');
 	let progress_fill = document.getElementById('progress-fill');
 	
 	
-	container.onscroll = function (e) {
-		progress_fill.style.width = Math.min(Math.max(0.07 * container.scrollLeft, 20), 100) + '%';
-	}
-
-	let scrollMax = single_slide_width * NumberOfElements;
+	let scrollMax = single_slide_width * TotalItems;
 	let scrollAmount = 0;
+	
+	progress_fill.style.width =  ( (container.scrollLeft+single_slide_width * items_in_viewport)/ (single_slide_width * TotalItems-1) )* 100 + '%';
+	container.onscroll = function (e) {
+		progress_fill.style.width =  ( (container.scrollLeft+single_slide_width * items_in_viewport)/ (single_slide_width * TotalItems-1) )* 100 + '%';
+	}
 
 
 	const rbutton = document.getElementById('right-arrow');
@@ -201,8 +213,6 @@ class Slider extends \Elementor\Widget_Base
 	};
 </script>
 
-
-<link rel="stylesheet" href="../assets/css/slider_style.css">
 <?php
 	}
 }
