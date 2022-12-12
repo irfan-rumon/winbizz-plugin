@@ -116,6 +116,7 @@
 #progress-bar {
     width: 200px;
     height: 3px;
+    margin: 0px 0.5em;
     margin-top: 5px;
     margin-left: 0px;
 }
